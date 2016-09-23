@@ -10,6 +10,11 @@ My implementation of the Multifunction In-Dorm Automation System inspired by the
 MIDAS is an easy to use web-frontend for home automation und development.
 
 
+## Usage
+
+Using MIDAS is pretty simple: Just fork this repository and add your configurations in `conf.d`.
+
+
 ## Contribute
 
 Anyone is welcome to contribute. Simply fork this repository, make your changes **in an own branch** and create a pull-request for your change. Please do only one change per pull-request.

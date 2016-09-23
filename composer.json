@@ -6,6 +6,7 @@
         }
     ],
     "require": {
+        "php": ">= 5.1",
         "mksec/silmod": "~1.1"
     }
 }

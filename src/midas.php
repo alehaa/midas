@@ -89,6 +89,22 @@ class MIDAS extends SilMod\SilMod
 			}
 		}
 	}
+
+
+	/** \brief Add routes to API routing.
+	 *
+	 * \details This function is a wrapper for the register_routes function of
+	 *  SilMod. All defined routes will not be mounted in the \p name path, but
+	 *  the \p name path in the api subdirectory.
+	 *
+	 *
+	 * \param name Module name.
+	 * \param callback Function to be called to register the modules routes.
+	 */
+	public function register_api_routes(string $name, callable $callback)
+	{
+		parent::register_routes('api/'.$name, $callback);
+	}
 };
 
 

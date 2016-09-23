@@ -239,7 +239,7 @@ class basic {
 		/* If transitions are enabled for this lamp, get the old color and
 		 * render a transition from the old to the new color. */
 		else {
-			$cur = new rgb($r, $g, $b, $this->get_cache_or_default('a', 0));
+			$cur = new rgb($r, $g, $b, $this->get_cache_or_default('a', 255));
 			$this->render_transition($cur, $color);
 		}
 

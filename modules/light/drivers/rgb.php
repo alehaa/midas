@@ -36,9 +36,8 @@ class rgb {
 	public $a;
 
 
-	function __construct(int $r, int $g, int $b, int $a = null)
+	function __construct(int $r, int $g, int $b, int $a = 255)
 	{
-		/* Check the RGB values. */
 		if ($r < 0 || $r > 255)
 			throw new \RuntimeException("Red value is out of range.");
 
@@ -48,19 +47,13 @@ class rgb {
 		if ($b < 0 || $b > 255)
 			throw new \RuntimeException("Blue value is out of range.");
 
+		if ($a < 0 || $a > 255)
+			throw new \RuntimeException("Alpha value is out of range.");
+
 		$this->r = $r;
 		$this->g = $g;
 		$this->b = $b;
-
-
-		/* Check the alpha channel. */
-		if ($a != null) {
-			if ($a < 0 || $a > 255)
-				throw new \RuntimeException("Alpha value is out of range.");
-
-			$this->a = $a;
-		} else
-			$this->a = 255;
+		$this->a = $a;
 	}
 
 

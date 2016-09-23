@@ -85,7 +85,6 @@ class MIDAS extends SilMod\SilMod
 
 				$this->config[$conf['module']][$conf['id']] = $conf;
 				unset($this->config[$conf['module']][$conf['id']]['module']);
-				unset($this->config[$conf['module']][$conf['id']]['id']);
 			}
 		}
 	}

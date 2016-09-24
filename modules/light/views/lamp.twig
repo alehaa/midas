@@ -1,0 +1,33 @@
+{% extends "index.twig" %}
+
+{% set title = name ~ ' | Light' %}
+
+{% set breadcrumb = [
+	{'caption': 'Light', 'link': url('light.home')},
+	{'caption': name, 'link': '' }
+] %}
+
+
+{% block content %}
+
+<div class="row">
+<h1>{{ name }}</h1>
+</div>
+
+<div class="form-group row">
+	<div class="col-sm-1 col-form-label">Brightness:</div>
+	<div class="col-sm-11">
+		<input type="range" min="0" max="255" value="{{ brightness }}" step="1" onchange="send_api('/api/light/{{ id }}/brightness/' + (+this.value).toString(16))"/>
+	</div>
+</div>
+
+<div class="row">
+	<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': 'ff', 'g': 'ff', 'b': 'ff'}) }}')" class="btn btn-lg btn-default">white</a>
+	<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': '00', 'g': '9a', 'b': 'ff'}) }}')" class="btn btn-lg btn-info">blue</a>
+	<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': '00', 'g': 'ff', 'b': '00'}) }}')" class="btn btn-lg btn-success">green</a>
+	<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': 'ff', 'g': 'ff', 'b': '00'}) }}')" class="btn btn-lg btn-warning">yellow</a>
+	<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': 'ff', 'g': '00', 'b': '00'}) }}')" class="btn btn-lg btn-danger">red</a>
+	<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': '00', 'g': '00', 'b': '00'}) }}')" class="btn btn-lg btn-link">black</a>
+</div>
+
+{% endblock %}

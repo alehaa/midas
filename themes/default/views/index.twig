@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="{{ lang | default('en') }}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+		<title>{% if title %}{{ title }} | {% endif %}MIDAS</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/themes/default/css/main.css">
+
+		<script src="/js/midas.js"></script>
+
+		{% block header %}{% endblock %}
+	</head>
+
+	<body>
+		<nav class="navbar navbar-fixed-top">
+			<div class="container">
+				<div class="row">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle visible-xs-inline" data-toggle="collapse" data-target="#navmenu">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+						</button>
+						<a class="navbar-brand" href="/">MIDAS</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+
+		{% if breadcrumb is defined %}
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="/">Home</a></li>
+				{% for item in breadcrumb %}
+					{% if loop.last %}
+						<li>{{ item.caption }}</li>
+					{% else %}
+						<li><a href="{{ item.link }}">{{ item.caption }}</a></li>
+					{% endif %}
+				{% endfor %}
+			</ol>
+		</div>
+		{% endif %}
+
+		{% block content %}{% endblock %}
+
+		</div>
+
+		<footer class="footer">
+			<div class="container" style="text-align: right;">
+				<div class="row">
+					<p class="text-muted">Powered by <a href="https://github.com/alehaa/midas">MIDAS</a>.</p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends "index.twig" %}
+
+{% set title = 'Light' %}
+
+{% set breadcrumb = [{'caption': 'Light', 'link': url('light.home')}] %}
+
+
+{% block content %}
+
+<div class="row">
+<h1>Light</h1>
+</div>
+
+{% for lamp in lamps %}
+	<div class="col-sm-6 col-md-2 text-center">
+		<div class="thumbnail ">
+			<a href="{{ url('light.lamp', {'id': lamp.id}) }}" class="thumbnail">
+				<i class="fa fa-lightbulb-o fa-5x fa-fw" aria-hidden="true"></i>
+				<div class="caption">{{ lamp.name }}</div>
+			</a>
+		</div>
+	</div>
+{% endfor %}
+
+{% endblock %}

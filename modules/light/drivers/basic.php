@@ -246,6 +246,21 @@ class basic {
 		/* Store the new brightness in the cache. */
 		$this->set_cache('a', $brightness);
 	}
+
+
+	/** \brief Get the current brightness.
+	 *
+	 * \details This function gets the current brightness of the LED stripe from
+	 *  the cache.
+	 *
+	 *
+	 * \return If a value could be found in the cache, it will be returned.
+	 *  Otherwise 255 will be returned.
+	 */
+	public function get_brightness()
+	{
+		return $this->get_cache_or_default('a', 255);
+	}
 };
 
 ?>

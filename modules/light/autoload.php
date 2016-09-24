@@ -64,6 +64,12 @@ $app->register_module("light");
 
 
 /*
+ * Register twig paths.
+ */
+$app->register_twig_path('light', __DIR__.'/views');
+
+
+/*
  * Register the API calls.
  */
 $app->register_api_routes("light", function($app, $routes) {
@@ -77,18 +83,46 @@ $app->register_api_routes("light", function($app, $routes) {
 	->assert('id', '\d+')
 	->assert('r', '[0-f]{2}')
 	->assert('g', '[0-f]{2}')
-	->assert('b', '[0-f]{2}');
+	->assert('b', '[0-f]{2}')
+	->bind('api.light.color');
 
 
 	$routes->get("/{id}/brightness/{brightness}", function ($id, $brightness)
 		use ($app) {
 		$driver = get_driver($app, $id);
-		$driver->set_brightness($brightness);
+		$driver->set_brightness(hexdec($brightness));
 
 		return json_encode(array('status' => 'ok'));
 	})
 	->assert('id', '\d+')
-	->assert('brightness', '[0-f]{2}');
+	->assert('brightness', '[0-f]{1,2}')
+	->bind('api.light.brightness');
+});
+
+
+/*
+ * Register the UI calls.
+ */
+$app->register_routes("light", function($app, $routes) {
+	$routes->get("/", function () use ($app) {
+		return $app['twig']->render('@light/overview.twig',
+			array('lamps' => $app->config['light']));
+	})
+	->bind('light.home');
+
+
+	$routes->get("/{id}", function ($id) use ($app) {
+		$driver = get_driver($app, $id);
+
+		return $app['twig']->render('@light/lamp.twig', array_merge(
+			$app->config['light'][$id],
+			array(
+				'brightness' => $driver->get_brightness()
+			)
+		));
+	})
+	->assert('id', '\d+')
+	->bind('light.lamp');
 });
 
 ?>

@@ -1,3 +1,4 @@
 /composer.lock
 /vendor
 /themes/*/css/*.css
+/conf.d/*.json

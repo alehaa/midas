@@ -32,7 +32,7 @@ use MIDAS\light\driver;
  *
  * \return Initialized driver object.
  */
-function get_driver(\MIDAS\MIDAS $app, int $id)
+function get_driver(\MIDAS\MIDAS $app, $id)
 {
 	/* Check if all necessary variables are set in the configuration. */
 	if (!isset($app->config['light'][$id]))

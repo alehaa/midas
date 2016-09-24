@@ -100,7 +100,7 @@ class MIDAS extends SilMod\SilMod
 	 * \param name Module name.
 	 * \param callback Function to be called to register the modules routes.
 	 */
-	public function register_api_routes(string $name, callable $callback)
+	public function register_api_routes($name, callable $callback)
 	{
 		parent::register_routes('api/'.$name, $callback);
 	}

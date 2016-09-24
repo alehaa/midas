@@ -36,7 +36,7 @@ class rgb {
 	public $a;
 
 
-	function __construct(int $r, int $g, int $b, int $a = 255)
+	function __construct($r, $g, $b, $a = 255)
 	{
 		if ($r < 0 || $r > 255)
 			throw new \RuntimeException("Red value is out of range.");

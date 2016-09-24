@@ -81,7 +81,7 @@ class basic {
 	 *
 	 * \return The APCu key to be used.
 	 */
-	private function apcu_key(string $keyword)
+	private function apcu_key($keyword)
 	{
 		return 'light.'.$this->id.'.'.$keyword;
 	}
@@ -101,7 +101,7 @@ class basic {
 	 * \return Either the value from the cache or the default value will be
 	 *  returned.
 	 */
-	private function get_cache_or_default(string $keyword, $default)
+	private function get_cache_or_default($keyword, $default)
 	{
 		$ret = apcu_fetch($this->apcu_key($keyword));
 		if ($ret !== false)
@@ -120,7 +120,7 @@ class basic {
 	 * \param keyword The APCu keyword to be used.
 	 * \param value The value to be stored in the cache.
 	 */
-	private function set_cache(string $keyword, $value)
+	private function set_cache($keyword, $value)
 	{
 		apcu_store($this->apcu_key($keyword), $value);
 	}
@@ -182,7 +182,7 @@ class basic {
 	 * \param g RGB green value.
 	 * \param b RGB blue value.
 	 */
-	public function set_color(int $r, int $g, int $b)
+	public function set_color($r, $g, $b)
 	{
 		/* Get the current brightness and create a new color object. */
 		$brightness = $this->get_cache_or_default('a', 255);
@@ -221,7 +221,7 @@ class basic {
 	 *
 	 * \param brightness New brightness value.
 	 */
-	public function set_brightness(int $brightness)
+	public function set_brightness($brightness)
 	{
 		/* Get the current color and create a new color object with the new
 		 * brightness. */

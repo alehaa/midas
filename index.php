@@ -25,9 +25,12 @@ require_once "vendor/autoload.php";
 require_once "src/midas.php";
 
 
-$app = new MIDAS\MIDAS(array(
-	'modules.path' => 'modules',
-	'config.path' => 'conf.d'
+use MIDAS\MIDAS;
+
+
+$app = new MIDAS(array(
+	'modules' => array('path' => 'modules'),
+	'config' => array('path' => 'conf.d')
 ));
 
 $app->run();

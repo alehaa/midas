@@ -8,7 +8,7 @@
     "require": {
         "php": ">= 7.0",
         "ext-apcu": "^5.1",
-        "mksec/silmod": "~1.2",
+        "mksec/silmod": "~2.0",
         "symfony/twig-bridge": "^3.1"
     }
 }

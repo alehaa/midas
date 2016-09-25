@@ -26,6 +26,9 @@ namespace MIDAS;
 use SilMod;
 
 
+require_once __DIR__.'/lock.php';
+
+
 class MIDAS extends SilMod\SilMod
 {
 	/** \brief Config array.

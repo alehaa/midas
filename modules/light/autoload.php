@@ -22,6 +22,7 @@
  */
 
 use MIDAS\light\driver;
+use MIDAS\lock;
 
 
 /** \brief Helfer function to get the required driver.
@@ -75,10 +76,16 @@ $app->register_twig_path('light', __DIR__.'/views');
 $app->register_api_routes("light", function($app, $routes) {
 	$routes->get("/{id}/color/{r}{g}{b}", function ($id, $r, $g, $b) use ($app)
 		{
+		$lock = new lock('light.'.$id);
+		if (!$lock->trylock())
+			return $app->json(array('status' => 'Resource busy'), 409);
+
 		$driver = get_driver($app, $id);
 		$driver->set_color(hexdec($r), hexdec($g), hexdec($b));
 
-		return json_encode(array('status' => 'ok'));
+		$lock->unlock();
+
+		return $app->json(array('status' => 'ok'));
 	})
 	->assert('id', '\d+')
 	->assert('r', '[0-f]{2}')
@@ -89,10 +96,16 @@ $app->register_api_routes("light", function($app, $routes) {
 
 	$routes->get("/{id}/brightness/{brightness}", function ($id, $brightness)
 		use ($app) {
+		$lock = new lock('light.'.$id);
+		if (!$lock->trylock())
+			return $app->json(array('status' => 'Resource busy'), 409);
+
 		$driver = get_driver($app, $id);
 		$driver->set_brightness(hexdec($brightness));
 
-		return json_encode(array('status' => 'ok'));
+		$lock->unlock();
+
+		return $app->json(array('status' => 'ok'));
 	})
 	->assert('id', '\d+')
 	->assert('brightness', '[0-f]{1,2}')

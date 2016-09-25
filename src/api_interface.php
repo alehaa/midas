@@ -21,8 +21,15 @@
  *  2016 Alexander Haase <ahaase@alexhaase.de>
  */
 
-require_once __DIR__.'/api_interface.php';
-require_once __DIR__.'/core.php';
-require_once __DIR__.'/lock.php';
+namespace MIDAS;
+
+use Silex\Application;
+
+
+interface ApiProviderInterface
+{
+	public function connect_api(Application $app);
+}
+
 
 ?>

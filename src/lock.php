@@ -37,7 +37,7 @@ class Lock
 	 * \param key The key to be used.
 	 * \param ttl The TTL to be used.
 	 */
-	function __construct(string $key, int $ttl = null)
+	function __construct($key, $ttl = null)
 	{
 		$this->key = $key;
 		$this->ttl = ($ttl == null) ? 0 : $ttl;

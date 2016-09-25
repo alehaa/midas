@@ -21,121 +21,12 @@
  *  2016 Alexander Haase <ahaase@alexhaase.de>
  */
 
-use MIDAS\light\driver;
-use MIDAS\lock;
+require_once 'light.php';
 
 
-/** \brief Helfer function to get the required driver.
- *
- *
- * \param app Handle to the core app.
- * \param id ID of the lamp.
- *
- * \return Initialized driver object.
- */
-function get_driver(\MIDAS\MIDAS $app, $id)
-{
-	/* Check if all necessary variables are set in the configuration. */
-	if (!isset($app->config['light'][$id]))
-		throw new \RuntimeException("Unknown light source '$id'.");
-
-	if (!isset($app->config['light'][$id]['driver']))
-		throw new \RuntimeException("No driver set for light source '$id'.");
-
-
-	/* Load the driver. */
-	$driver = $app->config['light'][$id]['driver'];
-	if (!is_file(__DIR__.'/drivers/'.$driver.'.php'))
-		throw new \RuntimeException("Unknown driver '$driver' for light source".
-			" '$id'.");
-
-	require_once __DIR__.'/drivers/'.$driver.'.php';
-
-
-	/* Initialize the driver. */
-	$classname = 'MIDAS\light\driver\\'.$driver;
-	return new $classname($app->config['light'][$id]);
-}
-
-
-/*
- * Register the module.
- */
-$app->register_module("light");
-
-
-/*
- * Register twig paths.
- */
-$app->register_twig_path('light', __DIR__.'/views');
-
-
-/*
- * Register the API calls.
- */
-$app->register_api_routes("light", function($app, $routes) {
-	$routes->get("/{id}/color/{r}{g}{b}", function ($id, $r, $g, $b) use ($app)
-		{
-		$lock = new lock('light.'.$id);
-		if (!$lock->trylock())
-			return $app->json(array('status' => 'Resource busy'), 409);
-
-		$driver = get_driver($app, $id);
-		$driver->set_color(hexdec($r), hexdec($g), hexdec($b));
-
-		$lock->unlock();
-
-		return $app->json(array('status' => 'ok'));
-	})
-	->assert('id', '\d+')
-	->assert('r', '[0-f]{2}')
-	->assert('g', '[0-f]{2}')
-	->assert('b', '[0-f]{2}')
-	->bind('api.light.color');
-
-
-	$routes->get("/{id}/brightness/{brightness}", function ($id, $brightness)
-		use ($app) {
-		$lock = new lock('light.'.$id);
-		if (!$lock->trylock())
-			return $app->json(array('status' => 'Resource busy'), 409);
-
-		$driver = get_driver($app, $id);
-		$driver->set_brightness(hexdec($brightness));
-
-		$lock->unlock();
-
-		return $app->json(array('status' => 'ok'));
-	})
-	->assert('id', '\d+')
-	->assert('brightness', '[0-f]{1,2}')
-	->bind('api.light.brightness');
-});
-
-
-/*
- * Register the UI calls.
- */
-$app->register_routes("light", function($app, $routes) {
-	$routes->get("/", function () use ($app) {
-		return $app['twig']->render('@light/overview.twig',
-			array('lamps' => $app->config['light']));
-	})
-	->bind('light.home');
-
-
-	$routes->get("/{id}", function ($id) use ($app) {
-		$driver = get_driver($app, $id);
-
-		return $app['twig']->render('@light/lamp.twig', array_merge(
-			$app->config['light'][$id],
-			array(
-				'brightness' => $driver->get_brightness()
-			)
-		));
-	})
-	->assert('id', '\d+')
-	->bind('light.lamp');
-});
+$light = new MIDAS\module\light();
+$app->register($light);
+$app->mount('/light', $light);
+$app->mount_api('/light', $light);
 
 ?>

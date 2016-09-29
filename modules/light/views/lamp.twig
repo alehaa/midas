@@ -11,7 +11,9 @@
 {% block content %}
 
 <div class="row">
-<h1>{{ name }}</h1>
+	<div class="col-md-12">
+		<h1>{{ name }}</h1>
+	</div>
 </div>
 
 <div class="form-group row">
@@ -22,12 +24,14 @@
 </div>
 
 <div class="row">
-	<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': 'ff', 'g': 'ff', 'b': 'ff'}) }}')" class="btn btn-lg btn-default">white</a>
-	<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': '00', 'g': '9a', 'b': 'ff'}) }}')" class="btn btn-lg btn-info">blue</a>
-	<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': '00', 'g': 'ff', 'b': '00'}) }}')" class="btn btn-lg btn-success">green</a>
-	<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': 'ff', 'g': 'ff', 'b': '00'}) }}')" class="btn btn-lg btn-warning">yellow</a>
-	<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': 'ff', 'g': '00', 'b': '00'}) }}')" class="btn btn-lg btn-danger">red</a>
-	<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': '00', 'g': '00', 'b': '00'}) }}')" class="btn btn-lg btn-link">black</a>
+	<div class="col-md-12">
+		<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': 'ff', 'g': 'ff', 'b': 'ff'}) }}')" class="btn btn-lg btn-default">white</a>
+		<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': '00', 'g': '9a', 'b': 'ff'}) }}')" class="btn btn-lg btn-info">blue</a>
+		<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': '00', 'g': 'ff', 'b': '00'}) }}')" class="btn btn-lg btn-success">green</a>
+		<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': 'ff', 'g': 'ff', 'b': '00'}) }}')" class="btn btn-lg btn-warning">yellow</a>
+		<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': 'ff', 'g': '00', 'b': '00'}) }}')" class="btn btn-lg btn-danger">red</a>
+		<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': '00', 'g': '00', 'b': '00'}) }}')" class="btn btn-lg btn-link">black</a>
+	</div>
 </div>
 
 {% endblock %}

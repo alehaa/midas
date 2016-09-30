@@ -21,8 +21,32 @@
  *  2016 Alexander Haase <ahaase@alexhaase.de>
  */
 
-require_once __DIR__.'/api_interface.php';
-require_once __DIR__.'/config.php';
-require_once __DIR__.'/core.php';
+namespace MIDAS\module\light;
+
+use LogicException;
+
+
+/** \brief Abstract helper class for configurable helper classes.
+ *
+ * \details When using Pimple as dependency manager, you may not pass parameters
+ *  to the constructor. Instead a separate function may be used to configure the
+ *  class. This abstract class provides the basic unfrastructure for such
+ *  classes.
+ */
+abstract class configurable {
+	protected $configured = false; ///< Configuration state.
+
+
+	/** \brief Check if object is configured.
+	 *
+	 *
+	 * \exception RuntimeException The object is not configured.
+	 */
+	public function is_configured()
+	{
+		if (!$this->configured)
+			throw new LogicException('Object is not configured.');
+	}
+}
 
 ?>

@@ -21,10 +21,18 @@
  *  2016 Alexander Haase <ahaase@alexhaase.de>
  */
 
-require_once 'light.php';
+require_once __DIR__.'/color.php';
+require_once __DIR__.'/configurable.php';
+require_once __DIR__.'/controller.php';
+require_once __DIR__.'/lock.php';
+require_once __DIR__.'/select_driver.php';
+require_once __DIR__.'/drivers/interface.php';
 
 
-$light = new MIDAS\module\light();
+use MIDAS\module\light\controller;
+
+
+$light = new controller();
 $app->register($light);
 $app->mount('/light', $light);
 $app->mount_api('/light', $light);

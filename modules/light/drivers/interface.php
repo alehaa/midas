@@ -21,8 +21,19 @@
  *  2016 Alexander Haase <ahaase@alexhaase.de>
  */
 
-require_once __DIR__.'/api_interface.php';
-require_once __DIR__.'/config.php';
-require_once __DIR__.'/core.php';
+namespace MIDAS\module\light\driver;
+
+use MIDAS\module\light\color;
+
+
+interface LightDriverInterface
+{
+	public function configure(array $config);
+
+	public function set_color(color $color);
+	public function set_brightness(int $brightness);
+
+	public function get_brightness();
+}
 
 ?>

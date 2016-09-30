@@ -21,7 +21,7 @@
  *  2016 Alexander Haase <ahaase@alexhaase.de>
  */
 
-namespace MIDAS\light\driver\helper;
+namespace MIDAS\module\light;
 
 
 /** \brief Helper class to store RGB values.
@@ -29,31 +29,27 @@ namespace MIDAS\light\driver\helper;
  * \details This little helper class stores RGB values and evaluates all data,
  *  so only valid data can be stored.
  */
-class rgb {
-	public $r;
-	public $g;
-	public $b;
-	public $a;
+class color {
+	public $r = 0; ///< Color red value.
+	public $g = 0; ///< Color green value.
+	public $b = 0; ///< Color blue value.
+	public $a = 255; ///< Color alpha channel value.
 
 
-	function __construct(int $r, int $g, int $b, int $a = 255)
+	/** \brief Convert a RGB hex string to a \ref color object.
+	 *
+	 *
+	 * \param src The string to be converted.
+	 *
+	 * \return Reference to this object.
+	 */
+	public function convert(string $src)
 	{
-		if ($r < 0 || $r > 255)
-			throw new \RuntimeException("Red value is out of range.");
+		if (sscanf($src, '%02x%02x%02x', $this->r, $this->g, $this->b) != 3)
+			throw new InvalidArgumentException(
+				'Parameter must be 6 digit lowercase hex.');
 
-		if ($g < 0 || $g > 255)
-			throw new \RuntimeException("Green value is out of range.");
-
-		if ($b < 0 || $b > 255)
-			throw new \RuntimeException("Blue value is out of range.");
-
-		if ($a < 0 || $a > 255)
-			throw new \RuntimeException("Alpha value is out of range.");
-
-		$this->r = $r;
-		$this->g = $g;
-		$this->b = $b;
-		$this->a = $a;
+		return $this;
 	}
 
 

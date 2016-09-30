@@ -25,12 +25,12 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': 'ff', 'g': 'ff', 'b': 'ff'}) }}')" class="btn btn-lg btn-default">white</a>
-		<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': '00', 'g': '9a', 'b': 'ff'}) }}')" class="btn btn-lg btn-info">blue</a>
-		<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': '00', 'g': 'ff', 'b': '00'}) }}')" class="btn btn-lg btn-success">green</a>
-		<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': 'ff', 'g': 'ff', 'b': '00'}) }}')" class="btn btn-lg btn-warning">yellow</a>
-		<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': 'ff', 'g': '00', 'b': '00'}) }}')" class="btn btn-lg btn-danger">red</a>
-		<a onClick="send_api('{{ url('api.light.color', {'id': id, 'r': '00', 'g': '00', 'b': '00'}) }}')" class="btn btn-lg btn-link">black</a>
+		<a onClick="send_api('{{ url('api.light.color', {'lamp': id, color: 'ffffff'}) }}')" class="btn btn-lg btn-default">white</a>
+		<a onClick="send_api('{{ url('api.light.color', {'lamp': id, color: '009aff'}) }}')" class="btn btn-lg btn-info">blue</a>
+		<a onClick="send_api('{{ url('api.light.color', {'lamp': id, color: '00ff00'}) }}')" class="btn btn-lg btn-success">green</a>
+		<a onClick="send_api('{{ url('api.light.color', {'lamp': id, color: 'ffff00'}) }}')" class="btn btn-lg btn-warning">yellow</a>
+		<a onClick="send_api('{{ url('api.light.color', {'lamp': id, color: 'ff0000'}) }}')" class="btn btn-lg btn-danger">red</a>
+		<a onClick="send_api('{{ url('api.light.color', {'lamp': id, color: '000000'}) }}')" class="btn btn-lg btn-link">black</a>
 	</div>
 </div>
 

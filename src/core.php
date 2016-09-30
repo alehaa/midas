@@ -28,9 +28,6 @@ use MIDAS\config;
 use SilMod\SilMod;
 
 
-require_once 'config.php';
-
-
 class MIDAS extends SilMod
 {
 	/** \brief Constructor.

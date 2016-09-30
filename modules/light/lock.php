@@ -21,64 +21,60 @@
  *  2016 Alexander Haase <ahaase@alexhaase.de>
  */
 
-namespace MIDAS;
+namespace MIDAS\module\light;
 
 
-class Lock
+/** \brief Helper class to lock light access to avoid race conditions.
+ */
+class lock
 {
-	private $key; ///< The lock key.
-	private $ttl; ///< The ttl for the key.
-	private $locked = false; ///< The state of the lock.
+	private $state = array(); ///< Array that stores the state of all locks.
 
 
-	/** \brief Create a new lock for \p key.
+	/** \brief Destructor.
 	 *
-	 *
-	 * \param key The key to be used.
-	 * \param ttl The TTL to be used.
-	 */
-	function __construct(string $key, int $ttl = null)
-	{
-		$this->key = $key;
-		$this->ttl = ($ttl == null) ? 0 : $ttl;
-	}
-
-
-	/** \brief Destroy and unlock the lock.
+	 * \details The destructor unlocks any locks it owns.
 	 */
 	function __destruct()
 	{
-		$this->unlock();
+		foreach (array_keys($this->state) as $key)
+			$this->unlock($key);
 	}
 
 
-	/** \brief Try to lock the \ref key.
+	/** \brief Try to lock the \p key.
 	 *
-	 * \details This function locks the \ref key. If \ref ttl is non-null, the
-	 *  ttl of the key will be set to the desired time to avoid not unlocked
-	 *  locks after crashes.
+	 * \details This function locks the \p key. If \p ttl is non-null, the ttl
+	 *  of the key will be set to the desired time to avoid not unlocked locks
+	 *  after crashes.
 	 *
 	 *
 	 * \return If the lock could be locked, true will be returned. Otherwise
-	 *  false will be returned.
+	 *  false.
 	 */
-	function trylock()
+	function trylock(string $key, int $ttl = null)
 	{
-		$this->locked = apcu_add($this->key, true, $this->ttl);
-		return $this->locked;
+		if (apcu_add($key, true, ($ttl == null) ? 0 : $ttl)) {
+			$this->state[$key] = true;
+			return true;
+		}
+
+		return false;
 	}
 
 
-	/** \brief Unlock the lock, if it's locked.
+	/** \brief Unlock the lock with \p key, if it's locked.
 	 *
 	 * \details If the lock was locked by us, this function will unlock it. If
-	 *  the lock was locked by another class, this function will simply do
+	 *  the lock was locked by another process, this function will simply do
 	 *  nothing.
 	 */
-	function unlock()
+	function unlock(string $key)
 	{
-		if ($this->locked)
-			apcu_delete($this->key);
+		if (isset($this->state[$key])) {
+			apcu_delete($key);
+			unset($this->state[$key]);
+		}
 	}
 }
 

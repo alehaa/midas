@@ -95,7 +95,8 @@ class controller implements ApiProviderInterface, BootableProviderInterface,
 
 	/** \brief Boot the module.
 	 *
-	 * \details This function registers the modules configurations for Twig.
+	 * \details This function registers the modules configurations for Twig and
+	 *  mounts the controller for UI and API usage.
 	 *
 	 *
 	 * \param app The attached Silex application.
@@ -103,6 +104,9 @@ class controller implements ApiProviderInterface, BootableProviderInterface,
 	public function boot(Application $app)
 	{
 		$app->register_twig_path('light', __DIR__.'/views');
+
+		$app->mount('/light', $this);
+		$app->mount_api('/light', $this);
 	}
 
 

@@ -32,9 +32,6 @@ require_once __DIR__.'/drivers/interface.php';
 use MIDAS\module\light\controller;
 
 
-$light = new controller();
-$app->register($light);
-$app->mount('/light', $light);
-$app->mount_api('/light', $light);
+$app->register(new controller());
 
 ?>

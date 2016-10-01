@@ -21,9 +21,6 @@
  *  2016 Alexander Haase <ahaase@alexhaase.de>
  */
 
-require_once __DIR__.'/abstracts/abstracts.php';
-require_once __DIR__.'/api_interface.php';
-require_once __DIR__.'/config.php';
-require_once __DIR__.'/core.php';
+require_once __DIR__.'/ro_array.php';
 
 ?>

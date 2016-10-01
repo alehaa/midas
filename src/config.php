@@ -24,11 +24,12 @@
 namespace MIDAS;
 
 use ArrayAccess;
+use MIDAS\ro_array;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
 
-class config implements ArrayAccess, ServiceProviderInterface
+class config extends ro_array implements ArrayAccess, ServiceProviderInterface
 {
 	/** \brief Config array.
 	 *
@@ -129,31 +130,6 @@ class config implements ArrayAccess, ServiceProviderInterface
 			return $this->data[$offset];
 
 		return false;
-	}
-
-
-	/** \brief Assigns a value to the specified offset.
-	 *
-	 * \note As the config is read-only, this function does simply nothing.
-	 *
-	 *
-	 * \param offset The offset to assign the value to.
-	 * \param value The value to set.
-	 */
-	public function offsetSet($offset, $value)
-	{
-	}
-
-
-	/** \brief Unsets an offset.
-	 *
-	 * \note As the config is read-only, this function does simply nothing.
-	 *
-	 *
-	 * \param offset The offset to unset.
-	 */
-	public function offsetUnset($offset)
-	{
 	}
 
 
